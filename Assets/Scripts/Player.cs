@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region Objects
-    private Navy _navy;
+    public Navy Navy;
     private List<Colony> _colonies;
     //map knowledge
     #endregion
