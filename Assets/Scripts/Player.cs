@@ -19,5 +19,6 @@ public class Player : MonoBehaviour
     private int _turnNumber;
     #endregion
 
+    public Player() { }
 
 }

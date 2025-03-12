@@ -3,23 +3,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Ship : MonoBehaviour
 {
     public string Name;
     public string Type;
     public Officers Officers;
-
-    private ShipTraits _traits;
-
-    public ShipTraits GetTraits()
-    {
-        return _traits;
-    }
-
-    public void SetTraits(ShipTraits traits)
-    {
-        _traits = traits;
-    }
+    public ShipTraits Traits;
 
     public bool AddOfficer(string office, string name)
     {
@@ -89,7 +79,7 @@ public class Ship : MonoBehaviour
         return true;
     }
 }
-
+[System.Serializable]
 public class ShipTraits
 {
     public string Abbreviation;
@@ -145,7 +135,7 @@ public class ShipTraits
         VersionHistory = versionHistory;
     }
 }
-
+[System.Serializable]
 public class Officers
 {
     public string Captain;

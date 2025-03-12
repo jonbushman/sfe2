@@ -1,12 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Navy : MonoBehaviour
+public class Navy : MonoBehaviour, IDataPersistence
 {
-    public Dictionary<string, List<Ship>> Fleets = new Dictionary<string, List<Ship>>();
+    public Dictionary<string, List<Ship>> Fleets;
     public Dictionary<string, string> FleetLocations;
+    public List<Ship> UnassignedShips;
+    public bool Test;
 
-    public List<Ship> UnassignedShips = new List<Ship>();
+    public Navy()
+    {
+        Fleets = new Dictionary<string, List<Ship>>();
+        FleetLocations = new Dictionary<string, string>();
+        UnassignedShips = new List<Ship>();
+    }
+
+    private void Start()
+    {
+        Fleets = new Dictionary<string, List<Ship>>();
+        FleetLocations = new Dictionary<string, string>();
+        UnassignedShips = new List<Ship>();
+    }
 
     public Ship CreateShip(string name, string type)
     {
@@ -15,7 +29,7 @@ public class Navy : MonoBehaviour
 
         var newShip = new Ship() { Name = name, Type = type, Officers = new Officers() };
 
-        newShip.SetTraits(ShipDictionary.AllShipTraits[type]);
+        newShip.Traits = ShipDictionary.AllShipTraits[type];
         UnassignedShips.Add(newShip);
 
         return newShip;
@@ -106,13 +120,18 @@ public class Navy : MonoBehaviour
         return true;
     }
 
-    private void Save()
+    public void SaveData(ref GameData data)
     {
-
+        data.FleetLocations = FleetLocations;
+        data.Fleets = Fleets;
+        data.UnassignedShips = UnassignedShips;
+        data.Test = Test;
     }
 
-    private void Load()
+    public void LoadData(GameData data)
     {
-
+        FleetLocations = data.FleetLocations;
+        Fleets = data.Fleets;
+        UnassignedShips = data.UnassignedShips;
     }
 }

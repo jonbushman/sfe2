@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 using System.IO;
-
+using Newtonsoft.Json;
 
 public class FileDataHandler
 {
@@ -31,7 +31,8 @@ public class FileDataHandler
                     }
                 }
 
-                loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
+                //loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
+                loadedData = JsonConvert.DeserializeObject<GameData>(dataToLoad);
             }
             catch (Exception e)
             {
@@ -49,7 +50,8 @@ public class FileDataHandler
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            var dataToStore = JsonUtility.ToJson(data, true);
+            //var dataToStore = JsonUtility.ToJson(data, true);
+            var dataToStore = JsonConvert.SerializeObject(data, Formatting.Indented);
 
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
