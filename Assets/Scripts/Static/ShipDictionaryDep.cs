@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public static class ShipDictionary
+public static class ShipDictionaryDep
 {
     public static Dictionary<string, ShipTraits> AllShipTraits;
 

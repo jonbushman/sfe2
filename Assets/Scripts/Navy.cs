@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Navy : MonoBehaviour, IDataPersistence
+[System.Serializable]
+public class Navy
 {
     public Dictionary<string, List<Ship>> Fleets;
     public Dictionary<string, string> FleetLocations;
     public List<Ship> UnassignedShips;
-    public bool Test;
+    public List<Base> Bases;
 
     public Navy()
     {
@@ -15,19 +16,14 @@ public class Navy : MonoBehaviour, IDataPersistence
         UnassignedShips = new List<Ship>();
     }
 
-    private void Start()
-    {
-
-    }
-
     public Ship CreateShip(string name, string type)
     {
-        if (!ShipDictionary.AllShipTraits.ContainsKey(type)) return null;
+        if (!ShipDictionaryDep.AllShipTraits.ContainsKey(type)) return null;
         if (!ShipNameUnique(name)) return null;
 
         var newShip = new Ship() { Name = name, Type = type, Officers = new Officers() };
 
-        newShip.Traits = ShipDictionary.AllShipTraits[type];
+        newShip.Traits = ShipDictionaryDep.AllShipTraits[type];
         UnassignedShips.Add(newShip);
 
         return newShip;
@@ -146,20 +142,5 @@ public class Navy : MonoBehaviour, IDataPersistence
         }
 
         return true;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.FleetLocations = FleetLocations;
-        data.Fleets = Fleets;
-        data.UnassignedShips = UnassignedShips;
-        data.Test = Test;
-    }
-
-    public void LoadData(GameData data)
-    {
-        FleetLocations = data.FleetLocations;
-        Fleets = data.Fleets;
-        UnassignedShips = data.UnassignedShips;
     }
 }

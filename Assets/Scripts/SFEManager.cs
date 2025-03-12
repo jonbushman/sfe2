@@ -4,7 +4,7 @@ public class SFEManager : MonoBehaviour
 {
     private void Awake()
     {
-        ShipDictionary.LoadFromJson();
+        ShipDictionaryDep.LoadFromJson();
     }
 
 

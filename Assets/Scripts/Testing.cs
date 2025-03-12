@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Testing : MonoBehaviour
 {
-    public Navy MyNavy;
+    public Player Player1;
 
     private void Start()
     {
@@ -13,33 +11,31 @@ public class Testing : MonoBehaviour
 
     public void CreateShips()
     {
-        var ship1 = MyNavy.CreateShip("Hot Topic", "Perdition Beam Titan");
-        var ship2 = MyNavy.CreateShip("McDonalds", "Super Space Control Ship");
-        var ship3 = MyNavy.CreateShip("New York", "Battleship");
-        var ship4 = MyNavy.CreateShip("Milan", "Battleship");
-        var ship5 = MyNavy.CreateShip("Tokyo", "Battleship");
-        var ship6 = MyNavy.CreateShip("Dicks Sporting Goods", "Heavy Cruiser Improved");
-        var ship7 = MyNavy.CreateShip("Big Five", "Heavy Cruiser Improved");
-        var ship8 = MyNavy.CreateShip("Peter Piper Pizza", "Heavy Cruiser Improved");
+        var ship1 = Player1.Navy.CreateShip("Hot Topic", "Perdition Beam Titan");
+        var ship2 = Player1.Navy.CreateShip("McDonalds", "Super Space Control Ship");
+        var ship3 = Player1.Navy.CreateShip("New York", "Battleship");
+        var ship4 = Player1.Navy.CreateShip("Milan", "Battleship");
+        var ship5 = Player1.Navy.CreateShip("Tokyo", "Battleship");
+        var ship6 = Player1.Navy.CreateShip("Dicks Sporting Goods", "Heavy Cruiser Improved");
+        var ship7 = Player1.Navy.CreateShip("Big Five", "Heavy Cruiser Improved");
+        var ship8 = Player1.Navy.CreateShip("Peter Piper Pizza", "Heavy Cruiser Improved");
 
-        MyNavy.Test = true;
-
-        MyNavy.RenameFleet();
+        Player1.Navy.RenameFleet();
 
     }
 
     public void MoveShipsIntoFleet()
     {
-        MyNavy.CreateFleet("Avenger");
+        Player1.Navy.CreateFleet("Avenger");
 
-        MyNavy.ChangeFleet(MyNavy.UnassignedShips, "Avenger");
+        Player1.Navy.ChangeFleet(Player1.Navy.UnassignedShips, "Avenger");
     }
 
     public void PrintFleet()
     {
         Debug.Log("Printing Fleet...");
 
-        var fleet = MyNavy.Fleets["Avenger"];
+        var fleet = Player1.Navy.Fleets["Avenger"];
 
         foreach (var ship in fleet)
         {

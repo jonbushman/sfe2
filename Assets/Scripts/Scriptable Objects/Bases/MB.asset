@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed31ae751c332ac4fbf5fecec7180321, type: 3}
+  m_Name: MB
+  m_EditorClassIdentifier: 
+  Name: Mobile Base
+  Scan:
+  - 1
+  - 0
+  - 0
+  TechLevel: 0
+  BPV: 50
+  Size: 4
+  Command: 5
+  Attack: 0
+  AttackCrippled: 0
+  Defense: 4
+  DefenseCrippled: 1
+  Cargo: 100
+  Fighters: 2
+  Launch: 1
+  Bombard: 0
+  PointDefense: 0
+  BaySize: 6
+  BayCount: 2
+  BayCountCrippled: 1
+  Production: 2
+  Supply: 4
