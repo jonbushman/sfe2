@@ -17,9 +17,7 @@ public class Navy : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        Fleets = new Dictionary<string, List<Ship>>();
-        FleetLocations = new Dictionary<string, string>();
-        UnassignedShips = new List<Ship>();
+
     }
 
     public Ship CreateShip(string name, string type)
@@ -75,6 +73,36 @@ public class Navy : MonoBehaviour, IDataPersistence
         return true;
     }
 
+    public bool ChangeFleet(List<Ship> ships, string newFleet)
+    {
+        if (!Fleets.ContainsKey(newFleet)) return false;
+
+        var shipsToMove = new List<Ship>(ships);
+
+        foreach (var ship in shipsToMove)
+        {
+            if (UnassignedShips.Contains(ship))
+            {
+                UnassignedShips.Remove(ship);
+                Fleets[newFleet].Add(ship);
+            }
+            else
+            {
+                foreach (var kvp in Fleets)
+                {
+                    if (kvp.Value.Contains(ship))
+                    {
+                        Fleets[kvp.Key].Remove(ship);
+                        Fleets[newFleet].Add(ship);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     public bool CreateFleet(string name)
     {
         if (Fleets.ContainsKey(name)) return false;
@@ -99,7 +127,7 @@ public class Navy : MonoBehaviour, IDataPersistence
 
     public void RenameFleet()
     {
-
+        Debug.Log("renaming");
     }
 
     public bool ShipNameUnique(string name)

@@ -1,10 +1,8 @@
-//keep ship names unique
-
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Ship : MonoBehaviour
+public class Ship
 {
     public string Name;
     public string Type;
