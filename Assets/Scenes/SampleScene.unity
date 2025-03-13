@@ -4405,7 +4405,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7fab64eafd1d848a28f03af53f9e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Players: []
+  Players:
+  - {fileID: 2050423977}
+  - {fileID: 624183193}
+  ActivePlayer: {fileID: 2050423977}
 --- !u!1 &1120601879
 GameObject:
   m_ObjectHideFlags: 0
@@ -8647,7 +8650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec628d855f99b71459e562794367e8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1: {fileID: 2050423977}
 --- !u!4 &2012180214
 Transform:
   m_ObjectHideFlags: 0
