@@ -1,19 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 public class Navy
 {
-    public Dictionary<string, List<Ship>> Fleets;
-    public Dictionary<string, string> FleetLocations;
-    public List<Ship> UnassignedShips;
+    public List<Fleet> Fleets;
+    public Fleet Unassigned;
     public List<Base> Bases;
 
     public Navy()
     {
-        Fleets = new Dictionary<string, List<Ship>>();
-        FleetLocations = new Dictionary<string, string>();
-        UnassignedShips = new List<Ship>();
+        Fleets = new List<Fleet>();
+        Unassigned = new Fleet();
+        Bases = new List<Base>();
     }
 
     public Ship CreateShip(string name, string type)
@@ -24,7 +24,7 @@ public class Navy
         var newShip = new Ship() { Name = name, Type = type, Officers = new Officers() };
 
         newShip.Traits = ShipDictionaryDep.AllShipTraits[type];
-        UnassignedShips.Add(newShip);
+        Unassigned.Ships.Add(newShip);
 
         return newShip;
     }
@@ -33,66 +33,39 @@ public class Navy
     {
         foreach (var fleet in Fleets)
         {
-            if (fleet.Value.Contains(ship))
+            if (fleet.Ships.Contains(ship))
             {
-                fleet.Value.Remove(ship);
+                fleet.Ships.Remove(ship);
             }
         }
-        if (UnassignedShips.Contains(ship))
+        if (Unassigned.Ships.Contains(ship))
         {
-            UnassignedShips.Remove(ship);
+            Unassigned.Ships.Remove(ship);
         }
     }
 
-    public bool ChangeFleet(Ship ship, string newFleet)
+    public bool ChangeFleet(Ship ship, string newFleetName) //this looks up the fleet name, but can just as easily pass in a Fleet class obj
     {
-        if (!Fleets.ContainsKey(newFleet)) return false;
+        var newFleet = Fleets.Where(x => x.Name == newFleetName).ToList().FirstOrDefault();
+        if (newFleet == null) return false;
 
-        if (UnassignedShips.Contains(ship))
+        if (Unassigned.Ships.Contains(ship))
         {
-            UnassignedShips.Remove(ship);
-            Fleets[newFleet].Add(ship);
+            Unassigned.Ships.Remove(ship);
+            newFleet.Ships.Add(ship);
         }
         else
         {
-            foreach (var kvp in Fleets)
+            var oldFLeet = Fleets.Where(x => x.Ships.Contains(ship)).ToList().FirstOrDefault();
+            if (oldFLeet == null)
             {
-                if (kvp.Value.Contains(ship))
-                {
-                    Fleets[kvp.Key].Remove(ship);
-                    Fleets[newFleet].Add(ship);
-                    return true;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public bool ChangeFleet(List<Ship> ships, string newFleet)
-    {
-        if (!Fleets.ContainsKey(newFleet)) return false;
-
-        var shipsToMove = new List<Ship>(ships);
-
-        foreach (var ship in shipsToMove)
-        {
-            if (UnassignedShips.Contains(ship))
-            {
-                UnassignedShips.Remove(ship);
-                Fleets[newFleet].Add(ship);
+                return false;
             }
             else
             {
-                foreach (var kvp in Fleets)
-                {
-                    if (kvp.Value.Contains(ship))
-                    {
-                        Fleets[kvp.Key].Remove(ship);
-                        Fleets[newFleet].Add(ship);
-                        return true;
-                    }
-                }
+                oldFLeet.Ships.Remove(ship);
+                newFleet.Ships.Add(ship) ;
+                return true;
             }
         }
 
@@ -101,22 +74,23 @@ public class Navy
 
     public bool CreateFleet(string name)
     {
-        if (Fleets.ContainsKey(name)) return false;
+        if (Fleets.Where(x => x.Name == name).Count() > 0) return false; 
 
-        Fleets.Add(name, new List<Ship>());
+        Fleets.Add(new Fleet(name));
 
         return true;
     }
 
-    public bool DisbandFleet(string name)
+    public bool DisbandFleet(string name) //same with this. can add or change to use Fleet class param
     {
-        if (!Fleets.ContainsKey(name)) return false;
+        var fleetToDisband = Fleets.Where(x => x.Name == name).ToList().FirstOrDefault();
+        if (fleetToDisband == null) return false;
 
-        foreach (var ship in Fleets[name])
+        foreach (Ship ship in fleetToDisband.Ships)
         {
-            UnassignedShips.Add(ship);
+            Unassigned.Ships.Add(ship);
         }
-        Fleets.Remove(name);
+        Fleets.Remove(fleetToDisband);
 
         return true;
     }
@@ -128,14 +102,14 @@ public class Navy
 
     public bool ShipNameUnique(string name)
     {
-        foreach (var ship in UnassignedShips)
+        foreach (var ship in Unassigned.Ships)
         {
             if (ship.Name == name) return false;
         }
 
-        foreach (var kvp in Fleets)
+        foreach (var fleet in Fleets)
         {
-            foreach (var ship in kvp.Value)
+            foreach (var ship in fleet.Ships)
             {
                 if (ship.Name == name) return false;
             }

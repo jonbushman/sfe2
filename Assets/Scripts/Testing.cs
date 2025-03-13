@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class Testing : MonoBehaviour
@@ -28,16 +29,16 @@ public class Testing : MonoBehaviour
     {
         Player1.Navy.CreateFleet("Avenger");
 
-        Player1.Navy.ChangeFleet(Player1.Navy.UnassignedShips, "Avenger");
+        //Player1.Navy.ChangeFleet(Player1.Navy.Unassigned, "Avenger");
     }
 
     public void PrintFleet()
     {
         Debug.Log("Printing Fleet...");
 
-        var fleet = Player1.Navy.Fleets["Avenger"];
+        var fleet = Player1.Navy.Fleets.Where(x => x.Name == "Avenger").ToList().FirstOrDefault();
 
-        foreach (var ship in fleet)
+        foreach (var ship in fleet.Ships)
         {
             Debug.Log(ship.Name);
         }
