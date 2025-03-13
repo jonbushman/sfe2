@@ -1,11 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class ShipMovement : MonoBehaviour
 {
-    public Player Player;
-    public List<Ship> FLeet;
+    public TMP_Dropdown PlayerDropDown;
+    public TMP_Dropdown FleetDropDown;
+    public List<TMP_InputField> SegmentInputs;
 
+
+    private Player _player;
+    private Fleet _fleet;
+
+    private void Start()
+    {
+
+        PlayerDropDown.ClearOptions();
+        foreach (var player in PlayerManager.Instance.Players)
+        {
+            PlayerDropDown.options.Add(new TMP_Dropdown.OptionData(player.Name));
+        }
+    }
+
+    private void OnEnable()
+    {
+        PlayerDropDown.onValueChanged.AddListener(OnPlayerSelection);
+        FleetDropDown.onValueChanged.AddListener(OnFleetSelection);
+
+        for (int i = 0; i <  SegmentInputs.Count; i++)
+        {
+            var segment = i;
+            SegmentInputs[i].onEndEdit.AddListener((value) => { OnSegmentLocationChanged(value, segment); });
+        }
+    }
+
+    private void OnPlayerSelection(int arg0)
+    {
+        var playerName = PlayerDropDown.options[arg0].text;
+        _player = PlayerManager.Instance.Players.Where(x => x.Name == playerName).FirstOrDefault();
+
+        if (_player == null)
+        {
+            FleetDropDown.enabled = false;
+        }
+        else
+        {
+            FleetDropDown.enabled = true;
+        }
+
+        FleetDropDown.ClearOptions();
+        foreach (var fleet in _player.Navy.Fleets)
+        {
+            FleetDropDown.options.Add(new TMP_Dropdown.OptionData(fleet.Name));
+        }
+    }
+
+    private void OnFleetSelection(int arg0)
+    {
+        var fleetName = FleetDropDown.options[arg0].text;
+        _fleet = _player.Navy.Fleets.Where(x => x.Name == fleetName).FirstOrDefault();
+    }
+
+    private void OnSegmentLocationChanged(string arg0, int segment)
+    {
+        Debug.Log("Segment: " + segment.ToString() + " move to " + arg0);
+        _fleet.Location[segment] = arg0;
+    }
 
 }

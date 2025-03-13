@@ -1,3 +1,5 @@
+//should add protection against name duplicates
+
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +12,7 @@ public class Player : MonoBehaviour, IDataPersistence
     #endregion
 
     #region Properties
+    public string Name;
     public int TechLevel;
     public List<string> IntelAdvancements;
     public Dictionary<string, string> Diplomacy;
@@ -35,6 +38,7 @@ public class Player : MonoBehaviour, IDataPersistence
         var savePlayer = new PlayerData();
         savePlayer.Navy = Navy;
         savePlayer.Colonies = Colonies;
+        savePlayer.Name = Name;
         savePlayer.TechLevel = TechLevel;
         savePlayer.IntelAdvancements = IntelAdvancements;
         savePlayer.Diplomacy = Diplomacy;
@@ -48,11 +52,13 @@ public class Player : MonoBehaviour, IDataPersistence
 
     public void LoadData(ref GameData data)
     {
-        var loadPlayer = data.Players.FirstOrDefault();
-        if (loadPlayer == null) { }
+        if (string.IsNullOrEmpty(Name)) return;
+        var loadPlayer = data.Players.Where(x => x.Name == Name).FirstOrDefault();
+        if (loadPlayer == null) return;
         
         Navy = loadPlayer.Navy;
         Colonies = loadPlayer.Colonies;
+        Name = loadPlayer.Name;
         TechLevel = loadPlayer.TechLevel;
         IntelAdvancements = loadPlayer.IntelAdvancements;
         Diplomacy = loadPlayer.Diplomacy;
@@ -75,6 +81,7 @@ public class PlayerData
     #endregion
 
     #region Properties
+    public string Name;
     public int TechLevel;
     public List<string> IntelAdvancements;
     public Dictionary<string, string> Diplomacy;

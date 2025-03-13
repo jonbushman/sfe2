@@ -3,32 +3,37 @@ using UnityEngine;
 
 public class Testing : MonoBehaviour
 {
-    public Player Player1;
 
     private void Start()
     {
     }
 
-
     public void CreateShips()
     {
-        var ship1 = Player1.Navy.CreateShip("Hot Topic", "Perdition Beam Titan");
-        var ship2 = Player1.Navy.CreateShip("McDonalds", "Super Space Control Ship");
-        var ship3 = Player1.Navy.CreateShip("New York", "Battleship");
-        var ship4 = Player1.Navy.CreateShip("Milan", "Battleship");
-        var ship5 = Player1.Navy.CreateShip("Tokyo", "Battleship");
-        var ship6 = Player1.Navy.CreateShip("Dicks Sporting Goods", "Heavy Cruiser Improved");
-        var ship7 = Player1.Navy.CreateShip("Big Five", "Heavy Cruiser Improved");
-        var ship8 = Player1.Navy.CreateShip("Peter Piper Pizza", "Heavy Cruiser Improved");
+        var ship1 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("Hot Topic", "Perdition Beam Titan");
+        var ship2 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("McDonalds", "Super Space Control Ship");
+        var ship3 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("New York", "Battleship");
+        var ship4 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("Milan", "Battleship");
+        var ship5 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("Tokyo", "Battleship");
+        var ship6 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("Dicks Sporting Goods", "Heavy Cruiser Improved");
+        var ship7 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("Big Five", "Heavy Cruiser Improved");
+        var ship8 = PlayerManager.Instance.ActivePlayer.Navy.CreateShip("Peter Piper Pizza", "Heavy Cruiser Improved");
 
-        Player1.Navy.RenameFleet();
+        PlayerManager.Instance.ActivePlayer.Navy.RenameFleet();
 
     }
 
     public void MoveShipsIntoFleet()
     {
-        Player1.Navy.CreateFleet("Avenger");
-
+        var newFleetName = PlayerManager.Instance.ActivePlayer.Name + " - Avenger";
+        PlayerManager.Instance.ActivePlayer.Navy.CreateFleet(newFleetName);
+        var unAss = PlayerManager.Instance.ActivePlayer.Navy.Unassigned;
+        var fleetToMove = new Fleet();
+        fleetToMove.Ships = unAss.Ships;
+        for (int i = 0; i < fleetToMove.Ships.Count; i++)
+        {
+            PlayerManager.Instance.ActivePlayer.Navy.ChangeFleet(fleetToMove.Ships[i], newFleetName);
+        }
         //Player1.Navy.ChangeFleet(Player1.Navy.Unassigned, "Avenger");
     }
 
@@ -36,7 +41,7 @@ public class Testing : MonoBehaviour
     {
         Debug.Log("Printing Fleet...");
 
-        var fleet = Player1.Navy.Fleets.Where(x => x.Name == "Avenger").ToList().FirstOrDefault();
+        var fleet = PlayerManager.Instance.ActivePlayer.Navy.Fleets.Where(x => x.Name == "Avenger").ToList().FirstOrDefault();
 
         foreach (var ship in fleet.Ships)
         {
