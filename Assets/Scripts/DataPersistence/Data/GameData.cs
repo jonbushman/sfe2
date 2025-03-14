@@ -1,12 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-[System.Serializable]
 public class GameData
 {
-    public List<PlayerData> Players;
+    public Dictionary<int, Dictionary<string, PlayerData>> Data;
 
     public GameData()
     {
-        this.Players = new List<PlayerData>();
+        Data = new Dictionary<int, Dictionary<string, PlayerData>>();
     }
+
 }

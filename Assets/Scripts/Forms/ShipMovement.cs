@@ -11,16 +11,18 @@ public class ShipMovement : MonoBehaviour
     public List<TMP_InputField> SegmentInputs;
 
 
-    private Player _player;
+    private Player _currentPlayer;
+    [SerializeField]private int _currentTurn;
     private Fleet _fleet;
 
     private void Start()
     {
 
+        var playerNames = SFEManager.Instance.GetPlayerNames();
         PlayerDropDown.ClearOptions();
-        foreach (var player in PlayerManager.Instance.Players)
+        foreach (var player in playerNames)
         {
-            PlayerDropDown.options.Add(new TMP_Dropdown.OptionData(player.Name));
+            PlayerDropDown.options.Add(new TMP_Dropdown.OptionData(player));
         }
     }
 
@@ -39,9 +41,9 @@ public class ShipMovement : MonoBehaviour
     private void OnPlayerSelection(int arg0)
     {
         var playerName = PlayerDropDown.options[arg0].text;
-        _player = PlayerManager.Instance.Players.Where(x => x.Name == playerName).FirstOrDefault();
+        var data = SFEManager.Instance.GetPlayerData(playerName, _currentTurn);
 
-        if (_player == null)
+        if (_currentPlayer == null)
         {
             FleetDropDown.enabled = false;
         }
@@ -51,7 +53,7 @@ public class ShipMovement : MonoBehaviour
         }
 
         FleetDropDown.ClearOptions();
-        foreach (var fleet in _player.Navy.Fleets)
+        foreach (var fleet in _currentPlayer.Navy.Fleets)
         {
             FleetDropDown.options.Add(new TMP_Dropdown.OptionData(fleet.Name));
         }
@@ -60,7 +62,7 @@ public class ShipMovement : MonoBehaviour
     private void OnFleetSelection(int arg0)
     {
         var fleetName = FleetDropDown.options[arg0].text;
-        _fleet = _player.Navy.Fleets.Where(x => x.Name == fleetName).FirstOrDefault();
+        _fleet = _currentPlayer.Navy.Fleets.Where(x => x.Name == fleetName).FirstOrDefault();
     }
 
     private void OnSegmentLocationChanged(string arg0, int segment)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDataPersistence
+public class Player : MonoBehaviour
 {
     #region Objects
     public Navy Navy;
@@ -12,14 +12,12 @@ public class Player : MonoBehaviour, IDataPersistence
     #endregion
 
     #region Properties
-    public string Name;
     public int TechLevel;
     public List<string> IntelAdvancements;
     public Dictionary<string, string> Diplomacy;
     public Dictionary<string, string> Traits;
     public Dictionary<string, string> RacialBonuses;
     public Dictionary<string, string> Technologies;
-    public int TurnNumber;
     #endregion
 
     public Player()
@@ -33,42 +31,52 @@ public class Player : MonoBehaviour, IDataPersistence
         Technologies = new Dictionary<string, string>();
     }
 
-    public void SaveData(ref GameData data)
-    {
-        var savePlayer = new PlayerData();
-        savePlayer.Navy = Navy;
-        savePlayer.Colonies = Colonies;
-        savePlayer.Name = Name;
-        savePlayer.TechLevel = TechLevel;
-        savePlayer.IntelAdvancements = IntelAdvancements;
-        savePlayer.Diplomacy = Diplomacy;
-        savePlayer.Traits = Traits;
-        savePlayer.RacialBonuses = RacialBonuses;
-        savePlayer.Technologies = Technologies;
-        savePlayer.TurnNumber = TurnNumber;
+    //public void SaveData(ref GameData data)
+    //{
+    //    var savePlayer = new PlayerData();
+    //    savePlayer.Navy = Navy;
+    //    savePlayer.Colonies = Colonies;
+    //    savePlayer.Name = Name;
+    //    savePlayer.TechLevel = TechLevel;
+    //    savePlayer.IntelAdvancements = IntelAdvancements;
+    //    savePlayer.Diplomacy = Diplomacy;
+    //    savePlayer.Traits = Traits;
+    //    savePlayer.RacialBonuses = RacialBonuses;
+    //    savePlayer.Technologies = Technologies;
+    //    savePlayer.TurnNumber = TurnNumber;
 
-        data.Players.Add(savePlayer);
-    }
+    //    if(!data.Data.ContainsKey(TurnNumber))
+    //    {
+    //        data.Data.Add(TurnNumber, new Dictionary<string, PlayerData>());
+    //    }
+    //    if (!data.Data[TurnNumber].ContainsKey(Name))
+    //    {
+    //        data.Data[TurnNumber].Add(Name, savePlayer);
+    //    }
+    //    else
+    //    {
+    //        data.Data[TurnNumber][Name] = savePlayer;
+    //    }
+    //}
 
-    public void LoadData(ref GameData data)
-    {
-        if (string.IsNullOrEmpty(Name)) return;
-        var loadPlayer = data.Players.Where(x => x.Name == Name).FirstOrDefault();
-        if (loadPlayer == null) return;
+    //public void LoadData(GameData data)
+    //{
+    //    var loadPlayer = data.Players.Where(x => x.Name == Name).FirstOrDefault();
+    //    if (loadPlayer == null) return;
         
-        Navy = loadPlayer.Navy;
-        Colonies = loadPlayer.Colonies;
-        Name = loadPlayer.Name;
-        TechLevel = loadPlayer.TechLevel;
-        IntelAdvancements = loadPlayer.IntelAdvancements;
-        Diplomacy = loadPlayer.Diplomacy;
-        Traits = loadPlayer.Traits;
-        RacialBonuses = loadPlayer.RacialBonuses;
-        Technologies = loadPlayer.Technologies;
-        TurnNumber = loadPlayer.TurnNumber;
+    //    Navy = loadPlayer.Navy;
+    //    Colonies = loadPlayer.Colonies;
+    //    Name = loadPlayer.Name;
+    //    TechLevel = loadPlayer.TechLevel;
+    //    IntelAdvancements = loadPlayer.IntelAdvancements;
+    //    Diplomacy = loadPlayer.Diplomacy;
+    //    Traits = loadPlayer.Traits;
+    //    RacialBonuses = loadPlayer.RacialBonuses;
+    //    Technologies = loadPlayer.Technologies;
+    //    TurnNumber = loadPlayer.TurnNumber;
 
-        data.Players.Remove(loadPlayer);
-    }
+    //    data.Players.Remove(loadPlayer);
+    //}
 }
 
 [System.Serializable]
@@ -81,13 +89,11 @@ public class PlayerData
     #endregion
 
     #region Properties
-    public string Name;
     public int TechLevel;
     public List<string> IntelAdvancements;
     public Dictionary<string, string> Diplomacy;
     public Dictionary<string, string> Traits;
     public Dictionary<string, string> RacialBonuses;
     public Dictionary<string, string> Technologies;
-    public int TurnNumber;
     #endregion
 }
