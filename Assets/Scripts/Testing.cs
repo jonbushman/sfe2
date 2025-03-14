@@ -245,6 +245,4 @@ public class Testing : MonoBehaviour
         Debug.Log("imported data pushed to Player Datas for Turn " + turn.ToString());
     }
 
-
-
 }
