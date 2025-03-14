@@ -17,17 +17,17 @@ public class ShipMovement : MonoBehaviour
 
     private void Start()
     {
+    }
 
+    private void OnEnable()
+    {
         var playerNames = SFEManager.Instance.GetPlayerNames();
         PlayerDropDown.ClearOptions();
         foreach (var player in playerNames)
         {
             PlayerDropDown.options.Add(new TMP_Dropdown.OptionData(player));
         }
-    }
 
-    private void OnEnable()
-    {
         PlayerDropDown.onValueChanged.AddListener(OnPlayerSelection);
         FleetDropDown.onValueChanged.AddListener(OnFleetSelection);
 

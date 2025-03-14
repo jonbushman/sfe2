@@ -96,4 +96,15 @@ public class PlayerData
     public Dictionary<string, string> RacialBonuses;
     public Dictionary<string, string> Technologies;
     #endregion
+
+    public PlayerData()
+    {
+        Navy = new Navy();
+        Colonies = new List<Colony>();
+        IntelAdvancements = new List<string>();
+        Diplomacy = new Dictionary<string, string>();
+        Traits = new Dictionary<string, string>();
+        RacialBonuses = new Dictionary<string, string>();
+        Technologies = new Dictionary<string, string>();
+    }
 }
