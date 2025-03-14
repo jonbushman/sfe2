@@ -6,7 +6,6 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Data;
 using System.IO;
-using Unity.VisualScripting;
 
 
 public class Testing : MonoBehaviour
@@ -41,6 +40,14 @@ public class Testing : MonoBehaviour
         if (player.Navy.Fleets.Where(x=> x.Name == name).Count() == 0)
         {
             player.Navy.Fleets.Add(new Fleet(name));
+        }
+
+    }    
+    public void CreateBase(PlayerData player, string name, string type)
+    {
+        if (player.Navy.Bases.Where(x=> x.Name == name).Count() == 0)
+        {
+            player.Navy.Bases.Add(new Base(name, type));
         }
     }
 
@@ -120,7 +127,7 @@ public class Testing : MonoBehaviour
             for (int j=0; j< countCells; j++)
             {
                 var objCell = objHeader.GetCell(j);
-                if (objCell == null || string.IsNullOrWhiteSpace(objCell.ToString())) continue;
+                //if (objCell == null || string.IsNullOrWhiteSpace(objCell.ToString())) continue;
                 
                 dTable.Columns.Add(objCell.ToString());
             }
@@ -132,18 +139,18 @@ public class Testing : MonoBehaviour
                 if (objRow.Cells.All(d => d.CellType == CellType.Blank)) continue;
                 for (int j = objRow.FirstCellNum; j < countCells; j++)
                 {
-                    if (objRow.GetCell(j) !=  null)
-                    {
-                        if (!string.IsNullOrEmpty(objRow.GetCell(j).ToString()) && !string.IsNullOrWhiteSpace(objRow.GetCell(j).ToString()))
-                        {
-                            rowList.Add(objRow.GetCell(j).ToString());
-                        }
-                    }
+                    rowList.Add(objRow.GetCell(j).ToString());
+                    //if (objRow.GetCell(j) !=  null)
+                    //{
+                    //    //if (!string.IsNullOrEmpty(objRow.GetCell(j).ToString()) && !string.IsNullOrWhiteSpace(objRow.GetCell(j).ToString()))
+                    //    //{
+                    //    //}
+                    //}
                 }
-                if (rowList.Count > 0)
-                {
-                    dTable.Rows.Add(rowList.ToArray());
-                }
+                dTable.Rows.Add(rowList.ToArray());
+                //if (rowList.Count > 0)
+                //{
+                //}
             }
         }
         _dataTable = dTable;
@@ -151,56 +158,93 @@ public class Testing : MonoBehaviour
         Debug.Log("Imported");
     }
 
-
-
     public void StoreImportedData()
     {
         int turn = 22;
         foreach(DataRow row in _dataTable.Rows)
         {
-            PlayerData thisPlayer = new PlayerData();
-            Fleet thisFleet = new Fleet("");
-            foreach (DataColumn column in _dataTable.Columns)
+            CreatePlayerData(turn, row["Empire"].ToString());
+            var thisPlayer = SFEManager.Instance.Data.Data[turn][row["Empire"].ToString()];
+            if (row["Speed"].ToString() == "Base")
             {
-                var data = row[column];
-                switch (column.ColumnName)
+                //have to count base instances and scanning quality to determine base
+                //1 instance: MB
+                //7 instances with 25%s, BS
+                //7 instances without 25%s, BATS
+                //more (19) is SB
+                var baseName = row["Fleet Name"].ToString();
+                var empireName = row["Empire"].ToString();
+                if (thisPlayer.Navy.Bases.Where(x => x.Name == baseName).Count() == 0)
                 {
-                    case "Empire":
-                        CreatePlayerData(turn, data.ToString());
-                        thisPlayer = SFEManager.Instance.Data.Data[turn][data.ToString()];
-                        break;
-                    case "Fleet Name":
-                        CreateFleet(thisPlayer, data.ToString());
-                        thisFleet = thisPlayer.Navy.Fleets.Where(x => x.Name == data.ToString()).FirstOrDefault();
-                        break;
-                    case "Starting Hex":
-                        thisFleet.Location[0] = data.ToString();
-                        break;
-                    case "Seg 1":
-                        thisFleet.Location[1] = data.ToString();
-                        break;
-                    case "Seg 2":
-                        thisFleet.Location[2] = data.ToString();
-                        break;
-                    case "Seg 3":
-                        thisFleet.Location[3] = data.ToString();
-                        break;
-                    case "Seg 4":
-                        thisFleet.Location[4] = data.ToString();
-                        break;
-                    case "Seg 5":
-                        thisFleet.Location[5] = data.ToString();
-                        break;
-                    case "Seg 6":
-                        thisFleet.Location[6] = data.ToString();
-                        break;
-                    default:
-                        break;
-
-                } 
+                    int occurences = 0;
+                    bool has25 = false;
+                    foreach (DataRow r in _dataTable.Rows)
+                    {
+                        if (r["Empire"].ToString() == empireName && r["Speed"].ToString() == "Base" && r["Fleet Name"].ToString() == baseName)
+                        {
+                            occurences++;
+                            if (r["Sensor Rating"].ToString() == "25%") has25 = true;
+                        }
+                    }
+                    var baseType = "";
+                    if (occurences == 1)
+                    {
+                        baseType = "MB";
+                    }
+                    else if (occurences > 2 && occurences <= 8 && has25)
+                    {
+                        baseType = "BS";
+                    }
+                    else if (occurences > 2 && occurences <= 8 && !has25)
+                    {
+                        baseType = "BATS";
+                    }
+                    else if (occurences > 8)
+                    {
+                        baseType = "SB";
+                    }
+                    CreateBase(thisPlayer, baseName, baseType);
+                }
+            }
+            else
+            {
+                CreateFleet(thisPlayer, row["Fleet Name"].ToString());
+                var thisFleet = thisPlayer.Navy.Fleets.Where(x => x.Name == row["Fleet Name"].ToString()).FirstOrDefault();
+                foreach (DataColumn column in _dataTable.Columns)
+                {
+                    var data = row[column];
+                    switch (column.ColumnName)
+                    {
+                        case "Starting Hex":
+                            thisFleet.Location[0] = data.ToString();
+                            break;
+                        case "Seg 1":
+                            thisFleet.Location[1] = data.ToString();
+                            break;
+                        case "Seg 2":
+                            thisFleet.Location[2] = data.ToString();
+                            break;
+                        case "Seg 3":
+                            thisFleet.Location[3] = data.ToString();
+                            break;
+                        case "Seg 4":
+                            thisFleet.Location[4] = data.ToString();
+                            break;
+                        case "Seg 5":
+                            thisFleet.Location[5] = data.ToString();
+                            break;
+                        case "Seg 6":
+                            thisFleet.Location[6] = data.ToString();
+                            break;
+                        default:
+                            break;
+                    } 
+                }
             }
         }
         Debug.Log("imported data pushed to Player Datas for Turn " + turn.ToString());
     }
+
+
 
 }
