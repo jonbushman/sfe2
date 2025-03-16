@@ -11,9 +11,9 @@ public class ShipMovement : MonoBehaviour
     public List<TMP_InputField> SegmentInputs;
 
 
-    private Player _currentPlayer;
+    private PlayerData _currentPlayer;
     [SerializeField]private int _currentTurn;
-    private Fleet _fleet;
+    private Fleet _currentFleet;
 
     private void Start()
     {
@@ -23,6 +23,7 @@ public class ShipMovement : MonoBehaviour
     {
         var playerNames = SFEManager.Instance.GetPlayerNames();
         PlayerDropDown.ClearOptions();
+        PlayerDropDown.options.Add(new TMP_Dropdown.OptionData("Please Choose a Player"));
         foreach (var player in playerNames)
         {
             PlayerDropDown.options.Add(new TMP_Dropdown.OptionData(player));
@@ -38,10 +39,18 @@ public class ShipMovement : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_currentPlayer != null)
+        {
+
+        }
+    }
+
     private void OnPlayerSelection(int arg0)
     {
         var playerName = PlayerDropDown.options[arg0].text;
-        var data = SFEManager.Instance.GetPlayerData(playerName, _currentTurn);
+        _currentPlayer = SFEManager.Instance.GetPlayerData(playerName, _currentTurn);
 
         if (_currentPlayer == null)
         {
@@ -50,25 +59,37 @@ public class ShipMovement : MonoBehaviour
         else
         {
             FleetDropDown.enabled = true;
+            FleetDropDown.ClearOptions();
+            foreach (var fleet in _currentPlayer.Navy.Fleets)
+            {
+                FleetDropDown.options.Add(new TMP_Dropdown.OptionData(fleet.Name));
+            }
         }
 
-        FleetDropDown.ClearOptions();
-        foreach (var fleet in _currentPlayer.Navy.Fleets)
-        {
-            FleetDropDown.options.Add(new TMP_Dropdown.OptionData(fleet.Name));
-        }
     }
 
     private void OnFleetSelection(int arg0)
     {
         var fleetName = FleetDropDown.options[arg0].text;
-        _fleet = _currentPlayer.Navy.Fleets.Where(x => x.Name == fleetName).FirstOrDefault();
+        _currentFleet = _currentPlayer.Navy.Fleets.Where(x => x.Name == fleetName).FirstOrDefault();
+
+        for (var i = 0; i < 7; i++)
+        {
+            if (_currentFleet != null)
+            {
+                SegmentInputs[i].text = _currentFleet.Location[i];
+            }
+            else
+            {
+                SegmentInputs[i].text = "";
+            }
+        }
     }
 
     private void OnSegmentLocationChanged(string arg0, int segment)
     {
         Debug.Log("Segment: " + segment.ToString() + " move to " + arg0);
-        _fleet.Location[segment] = arg0;
+        _currentFleet.Location[segment] = arg0;
     }
 
 }

@@ -46,6 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486492884bcd1e04c9b1d6bf66990d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 
+  _randomSprites:
+  - {fileID: 2800000, guid: e7beb5612df53b44cbc082bd72513d72, type: 3}
+  - {fileID: 2800000, guid: b3e2b6775d83c2a4696a9ed577a81331, type: 3}
+  - {fileID: 2800000, guid: aceb207b111c6354190aeb5bd24bb0f4, type: 3}
+  - {fileID: 2800000, guid: 065d6259e24ad94439fbec5d95bdf254, type: 3}
+  - {fileID: 2800000, guid: 504270017f60af74d95e92dba1602973, type: 3}
+  - {fileID: 2800000, guid: 441f5813b4b5dd7489948f943eedce07, type: 3}
+  - {fileID: 2800000, guid: 41b786388c52e9e428471cebd66b78c4, type: 3}
+  _originalMaterial: {fileID: 2100000, guid: a14919b569809e149bd1831eb4830cae, type: 2}
 --- !u!33 &1280964913201735629
 MeshFilter:
   m_ObjectHideFlags: 0

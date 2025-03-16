@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff46be4de49205478443d90d490ea1d, type: 3}
+  m_Name: Texture Dict
+  m_EditorClassIdentifier: 
+  TextureDict:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - AB
+    - Empty
+    - BP
+    - OP
+    - TP
+    _keys:
+    - AB
+    - Empty
+    - BP
+    - OP
+    - TP
+    _values:
+    - {fileID: 2800000, guid: 065d6259e24ad94439fbec5d95bdf254, type: 3}
+    - {fileID: 2800000, guid: e7beb5612df53b44cbc082bd72513d72, type: 3}
+    - {fileID: 2800000, guid: 441f5813b4b5dd7489948f943eedce07, type: 3}
+    - {fileID: 2800000, guid: aceb207b111c6354190aeb5bd24bb0f4, type: 3}
+    - {fileID: 2800000, guid: 77c6ea93ed585cc4696a91b7321c5b77, type: 3}
