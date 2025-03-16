@@ -6,6 +6,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Data;
 using System.IO;
+using System;
 
 
 public class Testing : MonoBehaviour
@@ -17,6 +18,8 @@ public class Testing : MonoBehaviour
     private PlayerData _currentPlayer;
 
     private DataTable _dataTable;
+
+    private Dictionary<string, string> _hexResourceDictionary;
 
     private void Start()
     {
@@ -43,6 +46,7 @@ public class Testing : MonoBehaviour
         }
 
     }    
+
     public void CreateBase(PlayerData player, string name, string type)
     {
         if (player.Navy.Bases.Where(x=> x.Name == name).Count() == 0)
@@ -245,4 +249,66 @@ public class Testing : MonoBehaviour
         Debug.Log("imported data pushed to Player Datas for Turn " + turn.ToString());
     }
 
+    public Dictionary<string, string> ParseHextmlMap()
+    {
+        var hexResourceDictionary = new Dictionary<string, string>();
+
+        var filePath = "C:\\Users\\Jon\\Downloads\\SFE 3.0 Map.html";
+
+        HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+
+        // There are various options, set as needed
+        htmlDoc.OptionFixNestedTags = true;
+
+        htmlDoc.Load(filePath);
+
+        if (htmlDoc.DocumentNode != null)
+        {
+            HtmlAgilityPack.HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
+
+            if (bodyNode != null)
+            {
+                var hexNodes = bodyNode.SelectNodes("//div[contains(@class, 'hexagon-in2')]");
+                foreach (var node in hexNodes)
+                {
+                    if (node != null)
+                    {
+                        try
+                        {
+                            var hexNumNode = node.SelectNodes(".//span[contains(@class, 'hexnum')]").FirstOrDefault().InnerText;
+                            var hexIDList = hexNumNode.Split(",").ToList();
+                            var hexID1 = hexIDList[0].Trim();
+                            var hexID2 = hexIDList[1].Trim();
+                            
+                            String hexID;
+                            if (hexID1.Count() == 1) hexID = "0" + hexID1;
+                            else hexID = hexID1;
+
+                            if (hexID2.Count() == 1) hexID = hexID + "0" + hexID2;
+                            else hexID = hexID + hexID2;
+
+                            var nodeClasses = node.GetClasses().ToList();
+                            var resourceClass = nodeClasses[1].ToString();
+                            var resourceName = resourceClass.Replace("resource-", "").Replace("_"," ");
+
+                            if (hexResourceDictionary.ContainsKey(hexID))
+                            {
+                                Debug.Log(hexID);
+                            }
+                            else
+                            {
+                                hexResourceDictionary.Add(hexID, resourceName);
+                            }
+                        }
+                        catch (ArgumentNullException)
+                        {
+                            Debug.Log("what");
+                        }
+                    }
+                }
+            }
+        }
+
+        return hexResourceDictionary;
+    }
 }

@@ -52,18 +52,23 @@ public class Hex : MonoBehaviour
         _mesh.triangles = _triangles;
         _mesh.uv = _uvs;
 
+    }
+
+    public void UpdateTexture(Texture tex)
+    {
         var mat = GetComponent<Renderer>().material = new Material(_originalMaterial);
 
-        var rand = Random.Range(0.0f, 1.0f);
-        if (rand < 0.9f)
-        {
-            mat.SetTexture("_MainTex", _randomSprites[0]);
-        }
-        else
-        {
-            var r = Random.Range(1, _randomSprites.Count);
-            mat.SetTexture("_MainTex", _randomSprites[r]);
-        }
+        mat.SetTexture("_MainTex", tex);
 
+        //var rand = Random.Range(0.0f, 1.0f);
+        //if (rand < 1.9f)
+        //{
+        //    mat.SetTexture("_MainTex", _randomSprites[0]);
+        //}
+        //else
+        //{
+        //    var r = Random.Range(1, _randomSprites.Count);
+        //    mat.SetTexture("_MainTex", _randomSprites[r]);
+        //}
     }
 }

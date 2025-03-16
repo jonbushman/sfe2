@@ -36,20 +36,140 @@ MonoBehaviour:
     reqReferences: {fileID: 0}
     isExpanded: 1
     _keyValues:
-    - AB
-    - Empty
-    - BP
-    - OP
-    - TP
+    - Black Hole
+    - Ion
+    - Ion 2
+    - Ion 3
+    - Ion Asteroid Belt
+    - Ion Barren Planet
+    - Ion Jungle Planet
+    - Ion Ocean Planet
+    - Ion Terran Planet
+    - Ion Terran Planet x2
+    - Moon
+    - Nebula
+    - Nebula 2
+    - Nebula 3
+    - Nebula Asteroid Belt
+    - Nebula Barren Planet
+    - Nebula Jungle Planet
+    - Nebula Ocean Planet
+    - Nebula Terran and Jungle
+    - Nebula Terran Planet
+    - Nebula Terran Planet x2
+    - Open Space
+    - Open Space Asteroid Belt
+    - Open Space Asteroid Belt 2
+    - Open Space Asteroid Belt 3
+    - Open Space Barren Planet
+    - Open Space Barren Planet 2x
+    - Open Space Capital Planet
+    - Open Space Gaia World
+    - Open Space Jungle and Barren Planet
+    - Open Space Jungle Planet
+    - Open Space Jungle Planet 2x
+    - Open Space Ocean Planet
+    - Open Space Ocean Planet 2x
+    - Open Space Terran and Barren Planet
+    - Open Space Terran and Jungle Planet
+    - Open Space Terran and Ocean Planet
+    - Open Space Terran Planet
+    - Open Space Terran Planet 2x
+    - Space Station
+    - Wormhole Blue
+    - Wormhole Green
+    - Wormhole Purple
+    - Wormhole Red
+    - Wormhole Yellow
     _keys:
-    - AB
-    - Empty
-    - BP
-    - OP
-    - TP
+    - Black Hole
+    - Ion
+    - Ion 2
+    - Ion 3
+    - Ion Asteroid Belt
+    - Ion Barren Planet
+    - Ion Jungle Planet
+    - Ion Ocean Planet
+    - Ion Terran Planet
+    - Ion Terran Planet x2
+    - Moon
+    - Nebula
+    - Nebula 2
+    - Nebula 3
+    - Nebula Asteroid Belt
+    - Nebula Barren Planet
+    - Nebula Jungle Planet
+    - Nebula Ocean Planet
+    - Nebula Terran and Jungle
+    - Nebula Terran Planet
+    - Nebula Terran Planet x2
+    - Open Space
+    - Open Space Asteroid Belt
+    - Open Space Asteroid Belt 2
+    - Open Space Asteroid Belt 3
+    - Open Space Barren Planet
+    - Open Space Barren Planet 2x
+    - Open Space Capital Planet
+    - Open Space Gaia World
+    - Open Space Jungle and Barren Planet
+    - Open Space Jungle Planet
+    - Open Space Jungle Planet 2x
+    - Open Space Ocean Planet
+    - Open Space Ocean Planet 2x
+    - Open Space Terran and Barren Planet
+    - Open Space Terran and Jungle Planet
+    - Open Space Terran and Ocean Planet
+    - Open Space Terran Planet
+    - Open Space Terran Planet 2x
+    - Space Station
+    - Wormhole Blue
+    - Wormhole Green
+    - Wormhole Purple
+    - Wormhole Red
+    - Wormhole Yellow
     _values:
-    - {fileID: 2800000, guid: 065d6259e24ad94439fbec5d95bdf254, type: 3}
-    - {fileID: 2800000, guid: e7beb5612df53b44cbc082bd72513d72, type: 3}
-    - {fileID: 2800000, guid: 441f5813b4b5dd7489948f943eedce07, type: 3}
-    - {fileID: 2800000, guid: aceb207b111c6354190aeb5bd24bb0f4, type: 3}
-    - {fileID: 2800000, guid: 77c6ea93ed585cc4696a91b7321c5b77, type: 3}
+    - {fileID: 2800000, guid: 92835a22336a7084c9f9df3adbea28c4, type: 3}
+    - {fileID: 2800000, guid: 869c74f57847dda4eabd16429cad3027, type: 3}
+    - {fileID: 2800000, guid: 048e08a62df707c4d880f6bf36bdad19, type: 3}
+    - {fileID: 2800000, guid: 219154e8cd8c855488d17cca83121e14, type: 3}
+    - {fileID: 2800000, guid: 640c075db89c2ce46bfb247a3cc29eb5, type: 3}
+    - {fileID: 2800000, guid: d3c25d1fddf736946ac599193502278f, type: 3}
+    - {fileID: 2800000, guid: 46e5edb31be748b4eb8ab3beb2f3a5a3, type: 3}
+    - {fileID: 2800000, guid: 2e1ffa7d6289f2048b05b74031daab04, type: 3}
+    - {fileID: 2800000, guid: 41c01d52391174f449f5d021c075b633, type: 3}
+    - {fileID: 2800000, guid: cfe56907ea4949c48aa3087d10322b7b, type: 3}
+    - {fileID: 2800000, guid: 09f4a52e66efa104d8797ddfecb3a6b0, type: 3}
+    - {fileID: 2800000, guid: a537bb1eebf565b438257e309b57ba93, type: 3}
+    - {fileID: 2800000, guid: eecc762ac70a5b74f87d136f7badc46c, type: 3}
+    - {fileID: 2800000, guid: aeb57c770140d3742b9992348b3bf1a2, type: 3}
+    - {fileID: 2800000, guid: b5447f7351be1144489fbd4610a18297, type: 3}
+    - {fileID: 2800000, guid: 109d0702339941949ac6b795f03c686c, type: 3}
+    - {fileID: 2800000, guid: 0b609a0d8fdae2e488ca3c7a392e16a3, type: 3}
+    - {fileID: 2800000, guid: 4f1b54fb1495c5f46bad4b30bb7bde80, type: 3}
+    - {fileID: 2800000, guid: 71ee8e1cefb4e844095643d3b715b85c, type: 3}
+    - {fileID: 2800000, guid: 07ec6d1132ad0224794c205937ee86f6, type: 3}
+    - {fileID: 2800000, guid: ba58f3b53c91b4b42bde09f89e80f390, type: 3}
+    - {fileID: 2800000, guid: 9edbe0765fdb5d945816087e1d7d421d, type: 3}
+    - {fileID: 2800000, guid: b4c4dc69b06d81d43bb756b842bee694, type: 3}
+    - {fileID: 2800000, guid: e5153ba1d421c094ca1fe53a16ccd377, type: 3}
+    - {fileID: 2800000, guid: 7b6b56b6c52af0a47aa58b0bb401748a, type: 3}
+    - {fileID: 2800000, guid: d30fa789d6d707041a17ef5f151b46ce, type: 3}
+    - {fileID: 2800000, guid: 1ab22ce3a297cab4bad18aeefdbe7e0a, type: 3}
+    - {fileID: 2800000, guid: 0645a40c4189aa6419834972d8016170, type: 3}
+    - {fileID: 2800000, guid: 566d50e0cecfc844f93ae745c5b45bd2, type: 3}
+    - {fileID: 2800000, guid: c619c32dc9554004baae60e4f3471c41, type: 3}
+    - {fileID: 2800000, guid: 41d72db7b342c3244a8c0d8a33458782, type: 3}
+    - {fileID: 2800000, guid: 5b50005413ac17c4cb16bc01d759f632, type: 3}
+    - {fileID: 2800000, guid: 294c38d81bbce5644b8f1e8f50110184, type: 3}
+    - {fileID: 2800000, guid: 34026b842df480e41b4f3ac783050e4f, type: 3}
+    - {fileID: 2800000, guid: 926847de06bdf5f44a33eb7c7a16fb77, type: 3}
+    - {fileID: 2800000, guid: 8829e7062560b1e478c7fcea31e55406, type: 3}
+    - {fileID: 2800000, guid: 98e105e6e0c38734dbdcb5870a5945b9, type: 3}
+    - {fileID: 2800000, guid: dbf545ea91783b548a23947ebbc09250, type: 3}
+    - {fileID: 2800000, guid: 373de4ec57108df4a9221b79f24e3cb5, type: 3}
+    - {fileID: 2800000, guid: 225558de1bef1b54a89e8cb5365348f7, type: 3}
+    - {fileID: 2800000, guid: 1e35b80271c5bdc459e9a492fc67bdf7, type: 3}
+    - {fileID: 2800000, guid: 4abab6d6f03e5b14d9ca57d515ef88c6, type: 3}
+    - {fileID: 2800000, guid: 6e5096d0ef6a9ad49986574ea85691ac, type: 3}
+    - {fileID: 2800000, guid: 4e38c27c606b5e34bbb124b3ebfc8525, type: 3}
+    - {fileID: 2800000, guid: 72d3f397388092343935f99a5e51c334, type: 3}
