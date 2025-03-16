@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,9 +19,12 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private SerializableDictionaryBase<string, Color> _playerColorDictionary;
     [SerializeField] private GameObject _fleetLabelPrefab;
+    [SerializeField] private GameObject _fleetLabelContainer;
 
 
     private Dictionary<Fleet, bool> _fleetLabelToggles = new Dictionary<Fleet, bool>();
+    private List<Hex> _hexes = new List<Hex>();
+
 
     public void CreateMap()
     {
@@ -39,23 +44,21 @@ public class MapManager : MonoBehaviour
                 newHex.transform.localPosition = new Vector3(j * (xPadding + Scale + Scale * Mathf.Sin(Mathf.PI/6)), -1 * (i * (Scale * Mathf.Cos(Mathf.PI/6) * 2 + yPadding) + extraY), 0);
                 
                 var hexData = newHex.GetComponent<Hex>();
-                hexData.ID = i.ToString("D2") + j.ToString("D2");
+                hexData.ID = j.ToString("D2") + i.ToString("D2");
                 newHex.gameObject.name = hexData.ID;
                 hexData.DrawHex(Scale);
 
-
+                _hexes.Add(hexData);
             }
         }
     }
 
 
 
-    public void CreateFleetLabels()
+    public void CreateFleetLabels() //spawns them in starting hex location
     {
         var data = SFEManager.Instance.Data.Data[22];
         Fleet fl = new Fleet();
-
-        var container = GameObject.Find("Fleet Labels Container");
         
         foreach (var playerName in data)
         {
@@ -69,8 +72,22 @@ public class MapManager : MonoBehaviour
 
                 var fLabel = Instantiate(_fleetLabelPrefab);
                 fLabel.name = playerName.Key + " <> " + fleet.Name;
-                fLabel.transform.parent = container.transform;
+                fLabel.transform.parent = _fleetLabelContainer.transform;
                 fLabel.GetComponentInChildren<Image>().color = _playerColorDictionary[playerName.Key];
+
+                var fleetLoc = fleet.Location[0];
+                //temp fix cause late night. fix at root later
+                if (fleetLoc.Count() == 3) fleetLoc = "0" + fleetLoc; 
+
+                var hex = _hexes.Where(x => x.ID == fleetLoc).ToList().FirstOrDefault();
+                try
+                {
+                    fLabel.transform.position = new Vector3(hex.transform.position.x, hex.transform.position.y, hex.transform.position.z - 0.5f);
+                }
+                catch (NullReferenceException e)
+                {
+                    Debug.Log("check here");
+                }
             }
         }
     }
