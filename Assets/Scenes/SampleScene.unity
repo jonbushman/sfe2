@@ -2029,7 +2029,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: place labels in 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3338,13 +3338,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2012180212}
-        m_TargetAssemblyTypeName: Testing, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1754614638}
+        m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+        m_MethodName: PlaceFleetLabels
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7941,6 +7941,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1264111588}
   m_CullTransparentMesh: 1
+--- !u!1 &1294680174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294680175}
+  m_Layer: 0
+  m_Name: Fleet Labels Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1294680175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294680174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1754614637}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1350982494
 GameObject:
   m_ObjectHideFlags: 0
@@ -10859,7 +10890,8 @@ Transform:
   m_LocalPosition: {x: 841.4742, y: 380.50635, z: -781.6208}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1294680175}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10883,6 +10915,60 @@ MonoBehaviour:
   _topLeftRaised: 1
   _hexPrefab: {fileID: 4621465563482047397, guid: 9e82ef08a5ce2f14c92128ae02c63786, type: 3}
   _textureDictionary: {fileID: 0}
+  _playerColorDictionary:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Company
+    - FSH
+    - KAA
+    - ORK
+    - SM01
+    - Sophlay
+    - Spathi
+    - UNE
+    - Vortallian
+    _keys:
+    - Company
+    - FSH
+    - KAA
+    - ORK
+    - SM01
+    - Sophlay
+    - Spathi
+    - UNE
+    - Vortallian
+    _values:
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0.43214107, b: 0, a: 1}
+    - {r: 1, g: 0.9371229, b: 0, a: 1}
+    - {r: 0.077782035, g: 1, b: 0, a: 1}
+    - {r: 0.03918637, g: 0.4433962, b: 0.01464045, a: 1}
+    - {r: 0, g: 0.09169197, b: 1, a: 1}
+    - {r: 0.30397072, g: 0, b: 0.3773585, a: 1}
+    - {r: 1, g: 0, b: 0.65129375, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+  _fleetLabelPrefab: {fileID: 7349430669104351797, guid: b054797b0d0ae6943918eb9cb86d1fba, type: 3}
 --- !u!23 &1754614639
 MeshRenderer:
   m_ObjectHideFlags: 0
