@@ -7,6 +7,7 @@ public class Base
 {
     public string Name;
     public string Type;
+    public string Location;
 
     public Base(string name, string type)
     {

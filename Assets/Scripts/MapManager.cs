@@ -22,23 +22,33 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _hexPrefab;
     [SerializeField] private TextureDictionaryScriptableObject _textureDictionary;
 
-    [SerializeField] private SerializableDictionaryBase<string, Color> _playerColorDictionary;
-    [SerializeField] private GameObject _fleetLabelPrefab;
-    [SerializeField] private GameObject _fleetLabelContainer;
 
     [SerializeField] private Slider _segmentSlider;
 
+    [Header("Labels")]
+    [SerializeField] private SerializableDictionaryBase<string, Color> _playerColorDictionary;
+    [SerializeField] private GameObject _fleetLabelPrefab;
+    [SerializeField] private GameObject _fleetLabelContainer;
     private Dictionary<Fleet, bool> _fleetLabelToggles = new Dictionary<Fleet, bool>();
     private List<Hex> _hexes = new List<Hex>();
     private Dictionary<Fleet, Transform> _fleetToLabelDict = new Dictionary<Fleet, Transform>();
+    [Space(5)]
+    [SerializeField] private GameObject _baseLabelPrefab;
+    [SerializeField] private GameObject _baseLabelContainer;
+    private Dictionary<Base, Transform> _baseToLabelDict = new Dictionary<Base, Transform>();
+
+
 
     [Space(5)]
+    
     [Header("Label Movement Settings")]
     [SerializeField] private bool _animateMovement;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _zAdjustment;
     [SerializeField] private float _destinationReachedThreshold;
     [SerializeField] private float _timeBetweenSegments;
+
+    private int _thisTurn = 22;
 
     private void Start()
     {
@@ -76,10 +86,75 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void CreateFleetLabels() //spawns them in starting hex location
+
+    public void CreateBaseLabels()
     {
-        var data = SFEManager.Instance.Data.Data[22];
-        Fleet fl = new Fleet();
+        var data = SFEManager.Instance.Data.Data[_thisTurn];
+        foreach (var playerName in data)
+        {
+            var bases = playerName.Value.Navy.Bases;
+            foreach (var station in bases)
+            {
+                //implement later
+                //if (_fleetLabelToggles.ContainsKey(fleet))
+                //{
+                //    if (_fleetLabelToggles[fleet] != true) continue;
+                //}
+
+                var bLabel = Instantiate(_baseLabelPrefab);
+                bLabel.name = playerName.Key + " :: " + station.Name;
+                bLabel.transform.parent = _baseLabelContainer.transform;
+                bLabel.GetComponent<Image>().color = _playerColorDictionary[playerName.Key];
+                _baseToLabelDict.Add(station, bLabel.transform);
+
+                var vfx = bLabel.GetComponent<VFXHelper>();
+                vfx.Target.GetComponent<SpriteRenderer>().color = _playerColorDictionary[playerName.Key];
+                vfx.DelayBeforeReset = UnityEngine.Random.Range(1f, 1.25f);
+                switch (station.Type)
+                {
+                    case "MB":
+                        vfx.Speed = 1f;
+                        vfx.Radius = 1f;
+                        break;
+                    case "BS":
+                        vfx.Speed = 2.5f;
+                        vfx.Radius = 1.5f;
+                        break;
+                    case "BATS":
+                        vfx.Speed = 4f;
+                        vfx.Radius = 2f; 
+                        break;
+                    case "SB":
+                        vfx.Speed = 8f;
+                        vfx.Radius = 3f; 
+                        break;
+                    default:
+                        break;
+                }
+
+                var baseLoc = station.Location;
+                //temp fix cause late night. fix at root later
+                if (baseLoc.Count() == 3) baseLoc = "0" + baseLoc;
+
+                var hex = _hexes.Where(x => x.ID == baseLoc).ToList().FirstOrDefault();
+                try
+                {
+                    bLabel.transform.position = new Vector3(hex.transform.position.x, hex.transform.position.y, hex.transform.position.z + _zAdjustment * 2);
+                    vfx.StartPulse(UnityEngine.Random.Range(0f, 1f));
+                }
+                catch (NullReferenceException e)
+                {
+                    Debug.Log("check here");
+                    bLabel.SetActive(false);
+                }
+            }
+        }
+    }
+
+    #region Fleet Visuals
+    public void CreateFleetLabels()
+    {
+        var data = SFEManager.Instance.Data.Data[_thisTurn];
         
         foreach (var playerName in data)
         {
@@ -114,8 +189,6 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
-
 
     public void MoveFleetLabels(float segmentFloat)
     {
@@ -185,4 +258,5 @@ public class MapManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenSegments);
         }
     }
+    #endregion
 }

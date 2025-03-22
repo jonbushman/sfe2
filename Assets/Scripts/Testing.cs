@@ -21,6 +21,15 @@ public class Testing : MonoBehaviour
 
     private Dictionary<string, string> _hexResourceDictionary;
 
+    [Header("Diplomacy Sim")]
+    [SerializeField] private List<int> _attemptsTilDiplomacyComplete;
+    [SerializeField] private List<int> _diplomacySimAnalysis;
+    [SerializeField] private int _iterations;
+    [SerializeField] private int _maxAttempts;
+    [SerializeField] private int _initialBonus;
+    [SerializeField] private int _staticBonus;
+    [SerializeField] private int _initialRank;
+
     private void Start()
     {
         _allData = SFEManager.Instance.Data;
@@ -47,11 +56,13 @@ public class Testing : MonoBehaviour
 
     }    
 
-    public void CreateBase(PlayerData player, string name, string type)
+    public void CreateBase(PlayerData player, string name, string type, string location)
     {
         if (player.Navy.Bases.Where(x=> x.Name == name).Count() == 0)
         {
-            player.Navy.Bases.Add(new Base(name, type));
+            var station = new Base(name, type);
+            station.Location = location;
+            player.Navy.Bases.Add(station);
         }
     }
 
@@ -207,7 +218,7 @@ public class Testing : MonoBehaviour
                     {
                         baseType = "SB";
                     }
-                    CreateBase(thisPlayer, baseName, baseType);
+                    CreateBase(thisPlayer, baseName, baseType, row["Starting Hex"].ToString());
                 }
             }
             else
@@ -311,4 +322,89 @@ public class Testing : MonoBehaviour
 
         return hexResourceDictionary;
     }
+
+    public void DiplomacySim()
+    {
+        var iterations = _iterations;
+        var maxAttempts = _maxAttempts;
+        var attemptsTilComplete = new List<int>();
+
+        for (int i = 0; i < iterations; i++)
+        {
+            var bonus = _initialBonus;
+            var staticBonus = _staticBonus;
+            var rank = _initialRank; //starting at Goodwill
+            var attempts = 0;
+            while (rank < 9 && attempts < maxAttempts)
+            {
+                bonus += staticBonus;
+                var diceRoll = UnityEngine.Random.Range(1, 101);
+                diceRoll += bonus;
+                bonus = 0;
+
+                attempts += 1;
+
+                switch (diceRoll)
+                {
+                    case 1:
+                        rank -= 2;
+                        break;
+                    case <= 10:
+                        rank -= 1;
+                        break;
+                    case <= 20:
+                        bonus = -20;
+                        break;
+                    case <= 30:
+                        bonus = -10;
+                        break;
+                    case <= 40:
+                        bonus = -5;
+                        break;
+                    case <= 60:
+                        bonus = 0;
+                        break;
+                    case <= 70:
+                        bonus = 5;
+                        break;
+                    case <= 80:
+                        bonus = 10;
+                        break;
+                    case <= 90:
+                        bonus = 20;
+                        break;
+                    case <= 100:
+                        bonus = 0;
+                        rank += 1;
+                        break;
+                    case > 100:
+                        bonus = 10;
+                        rank += 1;
+                        break;
+                }
+
+            }
+
+            if (rank == 9)
+            {
+                attemptsTilComplete.Add(attempts);
+            }
+            else
+            {
+                attemptsTilComplete.Add(20);
+            }
+        }
+        _attemptsTilDiplomacyComplete = attemptsTilComplete;
+        _diplomacySimAnalysis.Clear();
+        for (var  i = 0; i < 21; i++)
+        {
+            _diplomacySimAnalysis.Add(0);
+        }
+        foreach (var att in _attemptsTilDiplomacyComplete)
+        {
+            _diplomacySimAnalysis[att]+= 1;
+        }
+    }
+
+
 }

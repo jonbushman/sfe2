@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.IO;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 public class FileDataHandler
 {
